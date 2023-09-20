@@ -10,24 +10,31 @@ namespace TA_API.Models
         [Required]
         public string? EmployeeId { get; set; }
 
-        public string? Street_number { get; set; }
+        [Required]
+        public string Street_number { get; set; }
 
-        public String? Street { get; set; }
+        [Required]
+        public string Street { get; set; }
 
-        public String? Building_name { get; set; }
+        public string? Building_name { get; set; }
 
-        public String? Unit_number { get; set; }
+        public string? Unit_number { get; set; }
 
-        public String? Address_instruction { get; set; }
+        public string? Address_instruction { get; set; }
 
-        public String? Suburb { get; set; }
-        public String? City { get; set; }
+        [Required]
+        public string Suburb { get; set; }
 
-        public String? State { get; set; } //province in SA
+        [Required]
+        public string City { get; set; }
 
-        public String? Country { get; set; }
+        [Required]
+        public string State { get; set; } //province in SA
 
-        public String? Postal_code { get; set; }
+        [Required]
+        public string Country { get; set; }
+
+        public string? Postal_code { get; set; }
 
         public string? Longitude { get; set; }
 

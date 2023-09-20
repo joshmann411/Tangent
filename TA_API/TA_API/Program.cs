@@ -3,6 +3,7 @@ using Microsoft.OpenApi.Models;
 using Serilog;
 using System.Net;
 using Newtonsoft.Json.Serialization;
+using TA_API.Utils;
 //using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -39,9 +40,9 @@ builder.Services.AddSwaggerGen(c =>
 var mySqlConnectionStr = builder.Configuration.GetConnectionString("DefaultConnection");
 
 //configure DB to use DB context
-//builder.Services.AddDbContextPool<MaiExpDbContext>(options =>
-//options.UseMySql(
-//    mySqlConnectionStr, ServerVersion.AutoDetect(mySqlConnectionStr)));
+builder.Services.AddDbContextPool<AppDbContext>(options =>
+options.UseMySql(
+    mySqlConnectionStr, ServerVersion.AutoDetect(mySqlConnectionStr)));
 
 //Enale CORS
 builder.Services.AddCors(c =>
@@ -64,7 +65,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-//builder.Services.AddScoped<IActivity, ActivityRepository>();
+builder.Services.AddScoped<DataSeeder>();
 
 builder.Services.AddControllersWithViews();
 

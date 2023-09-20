@@ -1,13 +1,14 @@
-﻿using TA_API.Models;
+﻿using Microsoft.AspNetCore.Mvc;
+using TA_API.Models;
 
 namespace TA_API.Interfaces
 {
     public interface IEmployee
     {
-        Task<IEnumerable<Employee>> GetAllEmployee();
-        Task<Employee> GetEmployeeById(string id);
-        Task<String> AddEmployee(Employee employee);
-        Task<String> UpdateEmployee(Employee employeeChanges);
-        Task<String> DeleteEmployee(int Id);
+        Task<JsonResult> GetAllEmployees();
+        Task<JsonResult> GetEmployeeById(string id);
+        Task<string> AddEmployee(Employee employee);
+        Task<string> UpdateEmployee(Employee employeeChanges);
+        Task<string> DeleteEmployeeWithId(string Id);
     }
 }

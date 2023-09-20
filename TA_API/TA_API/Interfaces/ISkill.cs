@@ -1,13 +1,14 @@
-﻿using TA_API.Models;
+﻿using Microsoft.AspNetCore.Mvc;
+using TA_API.Models;
 
 namespace TA_API.Interfaces
 {
     public interface ISkill
     {
-        Task<IEnumerable<Skill>> GetAllSkills();
-        Task<Skill> GetSkill(int id);
-        Task<String> AddSkill(Skill skill);
-        Task<String> UpdateSkill(Skill skillChanges);
-        Task<String> DeleteSkill(int Id);
+        Task<JsonResult> GetAllSkills();
+        Task<JsonResult> GetSkill(int id);
+        Task<string> AddSkill(Skill skill);
+        Task<string> UpdateSkill(Skill skillChanges);
+        Task<string> DeleteSkill(int Id);
     }
 }
