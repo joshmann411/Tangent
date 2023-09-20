@@ -1,11 +1,12 @@
-﻿using TA_API.Models;
+﻿using Microsoft.AspNetCore.Mvc;
+using TA_API.Models;
 
 namespace TA_API.Interfaces
 {
     public interface IAddress
     {
-        Task<IEnumerable<Address>> GetAllAddress();
-        Task<Address> GetAddress(int id);
+        Task<JsonResult> GetAllAddress();
+        Task<JsonResult> GetAddressById(int id);
         Task<String> AddAddress(Address address);
         Task<String> UpdateAddress(Address addressChanges);
         Task<String> DeleteAddress(int Id);

@@ -65,8 +65,6 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddScoped<DataSeeder>();
-
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();

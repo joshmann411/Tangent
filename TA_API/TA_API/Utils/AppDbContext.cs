@@ -60,6 +60,7 @@ namespace TA_API.Utils
               });
 
 
+            #region Not_Needed_For_Now
 
             //mBuilder.Entity<Address>().HasData(
             //    new Address
@@ -118,6 +119,8 @@ namespace TA_API.Utils
             //        SkillName = "PowerBI",
             //        EmployeeId = 2
             //    });
+
+            #endregion
         }
     }
 }
