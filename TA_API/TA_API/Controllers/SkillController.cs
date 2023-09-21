@@ -70,6 +70,29 @@ namespace TA_API.Controllers
         }
 
 
+        [HttpGet]
+        [Route("GetSkillsOfEmployee/{employeeId}")]
+        public async Task<JsonResult> GetSkillsOfEmployee(string employeeId)
+        {
+            try
+            {
+                _logger.LogInformation($"==> Retrieving skills of employee with ID: {employeeId}");
+
+                var skill = await _skills.GetSkillsOfEmployee(employeeId);
+
+                _logger.LogInformation($"<== skill with ID: {employeeId} retrieved");
+
+                return skill;
+            }
+            catch (Exception ex)
+            {
+                //log error
+                _logger.LogError($"XXX Error while retrieving skills of employee with ID: {employeeId} | Exception {ex.Message.ToString()}");
+
+                //  
+                return new JsonResult($"Error retrieving skill with ID {employeeId}");
+            }
+        }
 
         [HttpPost]
         public async Task<string> AddSkill([FromBody] Skill skill)

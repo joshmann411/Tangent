@@ -7,12 +7,12 @@ import { Observable } from 'rxjs';
 })
 export class EmployeeService {
 
-  private APIUrl: string = 'http://localhost:5186/api/';
+  private APIUrl: string = 'http://localhost:5186/api/Employee';
 
   constructor(private http: HttpClient) { }
 
   GetAllEmployees(): Observable<any>{
-    let url = this.APIUrl + 'Employee/GetAllEmployees';
+    let url = this.APIUrl + '/GetAllEmployees';
 
     return this.http.get<any>(url);
   }

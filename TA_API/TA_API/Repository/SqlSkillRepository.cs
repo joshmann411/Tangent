@@ -73,6 +73,19 @@ namespace TA_API.Repository
             return new JsonResult(result);
         }
 
+        public async Task<JsonResult> GetSkillsOfEmployee(string employeeId)
+        {
+            if(!string.IsNullOrEmpty(employeeId))
+            {
+                _logger.LogInformation($"Repo Level Logging: Getting skills of employee with ID: ${employeeId}");
+                var allSkills = await _context.Skills.ToListAsync();
+                var result = allSkills.Where(a => a.EmployeeId.Equals(employeeId)).ToList();
+                _logger.LogInformation($"Repo Level Logging: Skills of employee with ID: ${employeeId} retrieved successfully.");
+                return new JsonResult(result);
+            }
+
+            return new JsonResult("invalid employee id");
+        }
 
         public async Task<string> UpdateSkill(Skill skillChanges)
         {

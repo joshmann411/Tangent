@@ -65,8 +65,9 @@ style="margin: 20px 30px 0px 30px;"
 *ngFor="let x of allEmployees; let i = index">
     <div 
     class="card" 
-    (click)="TriggerSelectedEmployee(x)"
+    (click)="openDialog(x)"
     style="margin-bottom: 10px; background-color: rgb(171, 164, 164);">
+        
         <div class="card-body row">
             <div class="col-3">
                 {{i + 1}}

@@ -71,8 +71,32 @@ namespace TA_API.Controllers
         }
 
 
+        [HttpGet]
+        [Route("GetAddressOfEmployee/{employeeId}")]
+        public async Task<JsonResult> GetAddressOfEmployee(string employeeId)
+        {
+            try
+            {
+                _logger.LogInformation($"==> Retrieving address of employee with ID: {employeeId}");
+
+                var addr = await _address.GetAddressOfEmployee(employeeId);
+
+                _logger.LogInformation($"<== Address with ID: {employeeId}");
+
+                return addr;
+            }
+            catch (Exception ex)
+            {
+                //log error
+                _logger.LogError($"XXX Error while retrieving address of employee with ID: {employeeId} | Exception {ex.Message.ToString()}");
+
+                //  
+                return new JsonResult($"Error retrieving address of employee {employeeId}");
+            }
+        }
 
         [HttpPost]
+        [Route("AddAddress")]
         public async Task<string> AddAddress([FromBody] Address address)
         {
             try

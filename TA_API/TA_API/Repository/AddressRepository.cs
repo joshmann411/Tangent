@@ -106,5 +106,20 @@ namespace TA_API.Repository
             return "Updated Successfully !";
         }
 
+        public async Task<JsonResult> GetAddressOfEmployee(string employeeId)
+        {
+            if (!string.IsNullOrEmpty(employeeId))
+            {
+                _logger.LogInformation($"Repo Level Logging: Getting address of employee with ID: ${employeeId}");
+                var addresses  = await _context.Addresses.ToListAsync();
+                var result = addresses.Where(a => a.EmployeeId.Equals(employeeId)).FirstOrDefault();
+
+                _logger.LogInformation($"Repo Level Logging: Address of employee with ID: ${employeeId} retrieved successfully.");
+                return new JsonResult(result);
+            }
+            _logger.LogInformation($"Repo Level Logging: invalid employee id");
+
+            return new JsonResult(null);
+        }
     }
 }

@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -10,6 +11,9 @@ import { ViewSkillComponent } from './pages/template/skillTemplate/view-skill/vi
 import {HttpClientModule} from '@angular/common/http';
 import { EmployeeViewComponent } from './pages/template/employee-view/employee-view.component';
 import { EmployeeEditComponent } from './pages/template/employee-edit/employee-edit.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button'
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -20,11 +24,18 @@ import { EmployeeEditComponent } from './pages/template/employee-edit/employee-e
     ViewSkillComponent,
     EmployeeViewComponent,
     EmployeeEditComponent,
+
+    
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatDialogModule,
+    MatButtonModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
 import { EmployeeService } from 'src/app/services/employee.service';
-import { MatDialog } from '@angular/material/dialog';
 import { EmployeeViewComponent } from '../template/employee-view/employee-view.component';
+import { MatDialog } from '@angular/material/dialog';
+import { AddressService } from 'src/app/services/address.service';
+import { SkillService } from 'src/app/services/skill.service';
 
 @Component({
   selector: 'app-employee',
@@ -12,8 +14,10 @@ export class EmployeeComponent {
   allEmployees: any;
 
   constructor(
+    public dialog: MatDialog,
     private employeeService: EmployeeService,
-    public dialog: MatDialog
+    private addressService: AddressService,
+    private skillService: SkillService
     ){
   }
 
@@ -27,17 +31,41 @@ export class EmployeeComponent {
     })
   }
 
-  TriggerSelectedEmployee(selEmployee: any)
-  {
-    alert(`Employee ${JSON.stringify(selEmployee)} clicked`)
-  }
+  // TriggerSelectedEmployee(selEmployee: any)
+  // {
+  //   // alert(`Employee ${JSON.stringify(selEmployee)} clicked`)
+
+    
+  //   this.openDialog(selEmployee);
+  // }
 
   openDialog(selEmp: any) {
+    let empAddress = null;
+    let empSkills = null;
+
+    //append selEmp
+    this.addressService.GetAddressOfEmployee(selEmp.Id).subscribe((result: any) => {
+      console.log(`Employees address: ${JSON.stringify(result)}`);
+
+      empAddress = result;
+
+      this.skillService.GetSkillsOfEmployee(selEmp.Id).subscribe((data: any) => {
+        console.log(`Employees skills: ${JSON.stringify(result)}`);
+        empSkills = data
+      });
+    });
+
+    let selEmp_Addr_Skills = {
+      emp: selEmp,
+      addr: empAddress,
+      skills: empSkills
+    }
+
     const dialogRef = this.dialog.open(EmployeeViewComponent, {
-      width: '250px',
+      width: '400px',
       data: {
-        title: 'Dialog Title',
-        content: `Data to display in the dialog: ${selEmp}`
+        title: 'View Employee',
+        content: selEmp_Addr_Skills
       }
     });
 

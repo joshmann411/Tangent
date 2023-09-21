@@ -7,6 +7,7 @@ namespace TA_API.Interfaces
     {
         Task<JsonResult> GetAllAddress();
         Task<JsonResult> GetAddressById(int id);
+        Task<JsonResult> GetAddressOfEmployee(string employeeId);
         Task<String> AddAddress(Address address);
         Task<String> UpdateAddress(Address addressChanges);
         Task<String> DeleteAddress(int Id);

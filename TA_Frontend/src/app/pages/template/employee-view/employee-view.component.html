@@ -1,7 +1,283 @@
-<h1 mat-dialog-title>{{ data.title }}</h1>
-<div mat-dialog-content>
-  <p>{{ data.content }}</p>
-</div>
-<div mat-dialog-actions>
-  <button mat-button (click)="onCloseClick()">Close</button>
-</div>
+  <div>
+
+    <h1 mat-dialog-title>{{ data.title }}</h1>
+    
+    <div mat-dialog-content>
+      <!-- <p>{{ data.content }}</p> -->
+      
+      <!-- firstname and lastname -->
+      <div class="row">
+
+          <div class="col-6">
+            <div class="mb-3">
+              <label 
+              for="FirstName" 
+              class="form-label">Firstname</label>
+              <input 
+                type="text" 
+                class="form-control"
+                name="FirstName"
+                [(ngModel)]="this.selEmp.FirstName"
+                id="exampleFormControlInput1" 
+              >
+            </div>
+          </div>
+          
+          <div class="col-6">
+            <div class="mb-3">
+              <label 
+              for="LastName" 
+              class="form-label">Lastname</label>
+              <input 
+              type="text" 
+              class="form-control" 
+              [(ngModel)]="this.selEmp.LastName"
+              id="exampleFormControlInput1">
+            </div>
+          </div>
+       
+
+      
+      </div>
+
+      <!-- contact -->
+      <div class="row">
+        <div class="col-12">
+            <div class="mb-3">
+              <label 
+              for="contact" 
+              class="form-label">Contact Number</label>
+
+              <input 
+              type="text" 
+              class="form-control"
+              [(ngModel)]="this.selEmp.ContactNumber" 
+              id="contact">
+            </div>
+        </div>
+        
+      </div>
+
+      <!-- email address -->
+      <div class="row">
+        <div class="col-12">
+            <div class="mb-3">
+              <label 
+              for="contact" 
+              class="form-label">Email Address</label>
+              <input 
+              type="email" 
+              class="form-control" 
+              [(ngModel)]="this.selEmp.Email"
+              id="emailAddr">
+            </div>
+        </div>
+        
+      </div>
+
+      <!-- dob -->
+      <div class="row">
+        <div class="col-12">
+            <div class="mb-3">
+              <label 
+              for="dob" 
+              class="form-label">Date of Birth</label>
+              <input 
+              type="datetime" 
+              class="form-control" 
+              id="dob"
+              [(ngModel)]="this.selEmp.DateOfBirth"
+              >
+            </div>
+        </div>
+        
+      </div>
+
+      <div>
+        <label 
+          for=""
+          style="font-weight: bold;">Address Info
+        </label>
+
+        <span 
+        *ngIf="isAddAddress" 
+        (click)="addNewAddress()"
+        style="float: right; color: red;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-x-circle" viewBox="0 0 16 16">
+            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+            <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+          </svg>
+        </span>
+        <br><br>
+
+        <ng-container *ngIf="!empAddr || (getObjectLength(empAddr?.length) < 1)">
+          <div>
+            
+            <button 
+              mat-raised-button
+              color="primary" 
+              *ngIf="!this.isAddAddress"
+              (click)="addNewAddress()">
+              Add New Address
+            </button>
+          </div>
+          
+          <!-- template to add a new address if Add New Address Btn clicked -->
+          <div 
+          *ngIf="isAddAddress"
+          style="border: 1px solid black; border-radius: 20px; padding: 20px;">
+            <!-- Street_number
+            Street
+            Suburb
+            City
+            State/Province
+            Country
+            PostalCode -->
+
+            <form 
+            [formGroup]="addressForm"
+            (ngSubmit)="onAddressSubmit()">
+              <!-- EmployeeId -->
+              <div class="form-group" hidden>
+                <label for="empId">Employee ID:</label>
+                <input 
+                type="text" 
+                class="form-control"
+                id="empId" 
+                formControlName="EmployeeId">
+              </div>
+
+              <!-- Street Number -->
+              <div class="form-group">
+                  <label for="streetNumber">Street Number:</label>
+                  <input 
+                  type="text" 
+                  class="form-control"
+                  id="streetNumber" 
+                  formControlName="Street_Number"
+                  placeholder="Enter street number">
+              </div>
+  
+              <!-- Street -->
+              <div class="form-group">
+                  <label for="street">Street:</label>
+                  <input 
+                  type="text" 
+                  class="form-control"
+                  id="street" 
+                  formControlName="Street"
+                  placeholder="Enter street name">
+              </div>
+  
+              <!-- Suburb -->
+              <div class="form-group">
+                  <label for="suburb">Suburb:</label>
+                  <input 
+                  type="text" 
+                  class="form-control" 
+                  formControlName="Suburb"
+                  id="suburb" 
+                  placeholder="Enter suburb">
+              </div>
+  
+              <!-- City -->
+              <div class="form-group">
+                  <label for="city">City:</label>
+                  <input 
+                  type="text" 
+                  class="form-control" 
+                  id="city" 
+                  formControlName="City"
+                  placeholder="Enter city">
+              </div>
+  
+              <!-- State/Province -->
+              <div class="form-group">
+                  <label for="stateProvince">State/Province:</label>
+                  <input 
+                  type="text" 
+                  class="form-control"
+                  id="stateProvince" 
+                  formControlName="State"
+                  placeholder="Enter state/province">
+              </div>
+  
+              <!-- Country -->
+              <div class="form-group">
+                  <label for="country">Country:</label>
+                  <input 
+                  type="text" 
+                  class="form-control" 
+                  id="country" 
+                  formControlName="Country"
+                  placeholder="Enter country">
+              </div>
+  
+              <!-- Postal Code -->
+              <div class="form-group">
+                  <label for="postalCode">Postal Code:</label>
+                  <input 
+                  type="text" 
+                  class="form-control" 
+                  id="postalCode" 
+                  formControlName="PostalCode"
+                  placeholder="Enter postal code">
+              </div>
+  
+              <br>
+              
+              <div class="form-group">
+
+                  <button 
+                  type="submit" 
+                  class="btn btn-warning form-control"
+                  [disabled]="addressForm.invalid">
+                  Submit
+                </button>
+              </div>
+            </form>
+          </div>
+        </ng-container>
+        
+
+
+
+
+        <!-- When address is present -->
+        <ng-container *ngIf="empAddr">
+          Address Dey
+        
+          <div class="row">
+            <div class="col-12">
+                <div class="mb-3">
+                  <label 
+                  for="street" 
+                  class="form-label">Street Address</label>
+    
+                  <input 
+                  type="text" 
+                  class="form-control"
+                  [(ngModel)]="this.selEmp.ContactNumber" 
+                  id="contact">
+                </div>
+            </div>
+            
+          </div>
+        </ng-container>
+      </div>
+    </div>
+
+    <div mat-dialog-actions>
+      <button 
+      mat-raised-button
+      color="primary" 
+      (click)="onCloseClick()">Close</button>
+    </div>
+
+    
+  </div>
+
+<!-- <div mat-dialog-actions>
+  <button mat-button mat-dialog-close>No</button>
+  <button mat-button mat-dialog-close cdkFocusInitial>Ok</button>
+</div> -->

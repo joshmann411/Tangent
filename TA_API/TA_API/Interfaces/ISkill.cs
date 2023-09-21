@@ -7,6 +7,7 @@ namespace TA_API.Interfaces
     {
         Task<JsonResult> GetAllSkills();
         Task<JsonResult> GetSkill(int id);
+        Task<JsonResult> GetSkillsOfEmployee(string employeeId);
         Task<string> AddSkill(Skill skill);
         Task<string> UpdateSkill(Skill skillChanges);
         Task<string> DeleteSkill(int Id);
