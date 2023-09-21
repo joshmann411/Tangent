@@ -35,7 +35,7 @@ namespace TA_API.Controllers
 
                 _logger.LogInformation("<== employee list retrieved");
 
-                return new JsonResult(employees);
+                return new JsonResult(employees.Value);
             }
             catch (Exception ex)
             {

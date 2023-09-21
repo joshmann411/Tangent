@@ -3,14 +3,28 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { EmployeeComponent } from './pages/employee/employee.component';
+import { AddSkillComponent } from './pages/template/skillTemplate/add-skill/add-skill.component';
+import { EditSkillComponent } from './pages/template/skillTemplate/edit-skill/edit-skill.component';
+import { ViewSkillComponent } from './pages/template/skillTemplate/view-skill/view-skill.component';
+import {HttpClientModule} from '@angular/common/http';
+import { EmployeeViewComponent } from './pages/template/employee-view/employee-view.component';
+import { EmployeeEditComponent } from './pages/template/employee-edit/employee-edit.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    EmployeeComponent,
+    AddSkillComponent,
+    EditSkillComponent,
+    ViewSkillComponent,
+    EmployeeViewComponent,
+    EmployeeEditComponent,
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
