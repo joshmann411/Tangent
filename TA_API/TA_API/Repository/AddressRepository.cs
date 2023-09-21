@@ -92,7 +92,7 @@ namespace TA_API.Repository
 
         }
 
-        public async Task<String> UpdateAddress(Address addressChanges)
+        public async Task<string> UpdateAddress(Address addressChanges)
         {
             _logger.LogInformation($"Repo Level Logging: Updating incoming address of ID: ${addressChanges.Id} with values ${new JsonResult(addressChanges)}");
 

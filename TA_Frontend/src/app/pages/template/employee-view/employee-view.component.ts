@@ -27,6 +27,16 @@ export class EmployeeViewComponent {
 
   isAddAddress: boolean = false;
 
+
+
+  counter: number = 0;
+  newSTIterator: any[] = [];
+
+
+  skillLevels = Object.values(SkillLevel);
+  selectedSkillLevel: SkillLevel = SkillLevel.Beginner;
+
+
   constructor(
     public dialogRef: MatDialogRef<EmployeeViewComponent>,
     public dialog: MatDialog,
@@ -36,8 +46,12 @@ export class EmployeeViewComponent {
   ) {
     //
     this.selEmp = data?.content?.emp;
+    console.log(`Employee from view: ${JSON.stringify(this.selEmp)}`);
+
     //addr
-    this.empAddr = data?.content?.addr;
+    this.empAddr = data?.content?.addrs;
+    console.log(`Address from view: ${JSON.stringify(this.empAddr)}`);
+    
     //skills
     this.empSkills = data?.content?.skills
 
@@ -50,7 +64,7 @@ export class EmployeeViewComponent {
       City: [null, Validators.required],
       State: [null, Validators.required],
       Country: [null, Validators.required],
-      PostalCode: [null, [Validators.required, Validators.pattern(/^\d+$/)]]
+      Postal_code: [null, [Validators.required, Validators.pattern(/^\d+$/)]]
     });
   }
 
@@ -73,14 +87,23 @@ export class EmployeeViewComponent {
       this.addressService.AddAddress(this.addressForm.value).subscribe((response: any) => {
         console.log(`Response: ${JSON.stringify(response)}`);
         
-        if(response.status == 200) //success
-        {
+       
+        console.log("Happy Days for address")
+
           //reload modal
-          this.onCloseClick()
+          // this.onCloseClick()
 
           //
-          this.openMyself();
-        }
+          // this.openMyself();
+          //   //get updated address
+        this.addressService.GetAddressOfEmployee(this.selEmp.Id).subscribe((result: any) => {
+        console.log(`Updated address: ${JSON.stringify(result)}`);
+
+          this.empAddr = result;
+
+          //reset isAddress variable
+          this.addNewAddress();
+        });
       })
     } else {
       // Form is invalid, display error messages or take appropriate action
@@ -90,31 +113,33 @@ export class EmployeeViewComponent {
     }
   }
 
-  openMyself() {
-    let selEmp_Addr_Skills = {
-      emp: this.selEmp,
-      addr: this.empAddr,
-      skills: this.empSkills
-    }
+ incrementNewSTIterator(){
+  this.counter = this.counter + 1;
+  console.log(`INC: ${this.counter}`)
+  this.newSTIterator.push(this.counter)
+ }
 
-    const dialogRef = this.dialog.open(EmployeeViewComponent, {
-      width: '400px',
-      data: {
-        title: 'View Employee',
-        content: selEmp_Addr_Skills
-      }
-    });
-  }
+ removeSelectedSkillInMemory(indx: any)
+ {
+  console.log(`Indx to remove: ${indx}`)
+  this.newSTIterator = this.newSTIterator.filter(r => r !== indx);
+ }
 
-  getObjectLength(obj: any): number {
-    if (!obj) {
-      return 0; // Return 0 if the object is not defined or falsy
-    }
+ // Event handler to capture the selected value
+//  onSkillLevelSelected(event: any) {
+//   this.selectedSkillLevel = event.target.value;
+//   console.log('Selected Skill Level:', this.selectedSkillLevel);
+// }
+onSkillLevelChange(event: any) {
+  this.selectedSkillLevel = event.target.value;
+  console.log('Selected Skill Level:', this.selectedSkillLevel);
+}
+}
 
-    console.log(`Count: ${Object.keys(obj).length}`);
-    
-    return Object.keys(obj).length;
-  }
 
-  
+
+export enum SkillLevel {
+  Beginner = 'beginner',
+  Intermediate = 'intermediate',
+  Expert = 'expert',
 }

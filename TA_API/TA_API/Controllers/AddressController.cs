@@ -97,7 +97,7 @@ namespace TA_API.Controllers
 
         [HttpPost]
         [Route("AddAddress")]
-        public async Task<string> AddAddress([FromBody] Address address)
+        public async Task<IActionResult> AddAddress([FromBody] Address address)
         {
             try
             {
@@ -105,13 +105,13 @@ namespace TA_API.Controllers
 
                 var result = await _address.AddAddress(address);
 
-                return result;
+                return new JsonResult(result);
             }
             catch (Exception ex)
             {
                 _logger.LogError($"CL: Error occurred while adding new address", ex.Message);
 
-                return "Error occurred";
+                return BadRequest("Error occurred");
             }
         }
 

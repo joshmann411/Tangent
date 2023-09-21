@@ -31,46 +31,44 @@ export class EmployeeComponent {
     })
   }
 
-  // TriggerSelectedEmployee(selEmployee: any)
-  // {
-  //   // alert(`Employee ${JSON.stringify(selEmployee)} clicked`)
-
-    
-  //   this.openDialog(selEmployee);
-  // }
 
   openDialog(selEmp: any) {
-    let empAddress = null;
-    let empSkills = null;
+    let ampAddr: any[] | null = null;
+    let empSkills: any[] | null = null;
 
     //append selEmp
     this.addressService.GetAddressOfEmployee(selEmp.Id).subscribe((result: any) => {
       console.log(`Employees address: ${JSON.stringify(result)}`);
 
-      empAddress = result;
+      ampAddr = result;
 
       this.skillService.GetSkillsOfEmployee(selEmp.Id).subscribe((data: any) => {
-        console.log(`Employees skills: ${JSON.stringify(result)}`);
+        console.log(`Employees skills: ${JSON.stringify(data)}`);
+        
         empSkills = data
+
+
+        //
+        let selEmp_Addr_Skills = {
+          emp: selEmp,
+          addrs: ampAddr,
+          skills: empSkills
+        }
+    
+        const dialogRef = this.dialog.open(EmployeeViewComponent, {
+          width: '400px',
+          data: {
+            title: 'View Employee',
+            content: selEmp_Addr_Skills
+          }
+        });
+    
+        dialogRef.afterClosed().subscribe(result => {
+          console.log('Dialog closed with result:', result);
+        });
       });
     });
 
-    let selEmp_Addr_Skills = {
-      emp: selEmp,
-      addr: empAddress,
-      skills: empSkills
-    }
-
-    const dialogRef = this.dialog.open(EmployeeViewComponent, {
-      width: '400px',
-      data: {
-        title: 'View Employee',
-        content: selEmp_Addr_Skills
-      }
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('Dialog closed with result:', result);
-    });
+    
   }
 }

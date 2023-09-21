@@ -93,6 +93,7 @@
         
       </div>
 
+      <!-- Address Template -->
       <div>
         <label 
           for=""
@@ -110,7 +111,8 @@
         </span>
         <br><br>
 
-        <ng-container *ngIf="!empAddr || (getObjectLength(empAddr?.length) < 1)">
+        <!-- when address is not present -->
+        <ng-container *ngIf="empAddr?.length < 1">
           <div>
             
             <button 
@@ -126,13 +128,15 @@
           <div 
           *ngIf="isAddAddress"
           style="border: 1px solid black; border-radius: 20px; padding: 20px;">
-            <!-- Street_number
-            Street
-            Suburb
-            City
-            State/Province
-            Country
-            PostalCode -->
+            <!-- 
+              EmployeeId
+              Street_number
+              Street
+              Suburb
+              City
+              State/Province
+              Country
+              Postal_code -->
 
             <form 
             [formGroup]="addressForm"
@@ -220,7 +224,7 @@
                   type="text" 
                   class="form-control" 
                   id="postalCode" 
-                  formControlName="PostalCode"
+                  formControlName="Postal_code"
                   placeholder="Enter postal code">
               </div>
   
@@ -238,32 +242,136 @@
             </form>
           </div>
         </ng-container>
-        
-
-
-
-
+     
         <!-- When address is present -->
         <ng-container *ngIf="empAddr">
-          Address Dey
-        
+          <!-- Street Address -->
           <div class="row">
-            <div class="col-12">
+            <!-- Street Address -->
+            <div class="col-6">
                 <div class="mb-3">
                   <label 
-                  for="street" 
+                  for="streetAddr" 
                   class="form-label">Street Address</label>
     
                   <input 
                   type="text" 
                   class="form-control"
-                  [(ngModel)]="this.selEmp.ContactNumber" 
-                  id="contact">
+                  [(ngModel)]="this.empAddr.Street_number" 
+                  id="streetAddr">
                 </div>
             </div>
+
+            <!-- Street -->
+            <div class="col-6">
+              <div class="mb-3">
+                <label 
+                for="street" 
+                class="form-label">Street</label>
+  
+                <input 
+                type="text" 
+                class="form-control"
+                [(ngModel)]="empAddr.Street" 
+                id="street">
+              </div>
+          </div>
             
           </div>
+
+          <!-- City | Postal_Code | Country -->
+          <div class="row">
+            <div class="col-4">
+              <div class="mb-3">
+                <label 
+                for="city" 
+                class="form-label">City</label>
+  
+                <input 
+                type="text" 
+                class="form-control"
+                [(ngModel)]="empAddr.City" 
+                id="city">
+              </div>
+            </div>
+
+            <div class="col-4">
+              <div class="mb-3">
+                <label 
+                for="postal" 
+                class="form-label">Postal Code</label>
+  
+                <input 
+                type="text" 
+                class="form-control"
+                [(ngModel)]="empAddr.Postal_code"  
+                id="postal">
+              </div>
+            </div>
+
+            <div class="col-4">
+              <div class="mb-3">
+                <label 
+                for="county" 
+                class="form-label">Country</label>
+  
+                <input 
+                type="text" 
+                class="form-control"
+                [(ngModel)]="empAddr.Country" 
+                id="county">
+              </div>
+            </div>
+          </div>
         </ng-container>
+      </div>
+
+      <!-- Skills Template -->
+      <div>
+        <label 
+          for=""
+          style="font-weight: bold;">Skills
+        </label>
+        <br><br>
+        <!-- header -->
+        <div class="row">
+          <div class="col-4">
+            Skill
+          </div>
+          <div class="col-4">
+            YrsExp
+          </div>
+          <div class="col-4">
+            Seniority Rating
+          </div>
+        </div>
+        <!-- header ends -->
+
+
+        <!-- Two scenarios exist here -->
+        <!-- 1. Some skill(s) already exists, and we may or may not want to append it -->
+        <!-- loop through skills $>> if any <<$ -->
+        <div *ngIf="empSkills">
+        
+          <div *ngFor="let _skill of empSkills">
+            <ng-container [ngTemplateOutlet]="skillTemplate" [ngTemplateOutletContext]="{ skill: _skill }"></ng-container>
+          </div>
+        </div>
+
+        <!-- 2. add more skills on click of Add New Skill button -->
+        <div *ngFor="let newST of newSTIterator">
+          <ng-container [ngTemplateOutlet]="newSkillTemplate" [ngTemplateOutletContext]="{ index: newST }"></ng-container>
+        </div>
+
+        
+        
+        <!-- Add New Skill button -->
+        <button 
+          mat-raised-button
+          color="primary" 
+          (click)="incrementNewSTIterator()">
+          + Add New Skill
+        </button>
       </div>
     </div>
 
@@ -277,7 +385,65 @@
     
   </div>
 
-<!-- <div mat-dialog-actions>
-  <button mat-button mat-dialog-close>No</button>
-  <button mat-button mat-dialog-close cdkFocusInitial>Ok</button>
-</div> -->
+
+
+  <ng-template #skillTemplate let-skill="skill">
+    <p>Incoming Skill: {{skill}}</p>
+  </ng-template>
+
+
+  <ng-template #newSkillTemplate let-index="index">
+    <div class="row">
+      <div class="col-4">
+        <div class="mb-3">
+         
+          <!-- skill1 -->
+          <input 
+          type="text" 
+          class="form-control" 
+          name="skill">
+        </div>
+      </div>
+      <div class="col-2">
+        <div class="mb-3">
+         
+          <!-- YrsExp1 -->
+          <input 
+          type="number" 
+          class="form-control" 
+          name="YrsExp">
+        </div>
+      </div>
+
+      <div class="col-4">
+        <select
+          class="form-control"
+          id="selectedSkillLevel"
+          (change)="onSkillLevelChange($event)"
+          [(ngModel)]="selectedSkillLevel"
+          name="selectedSkillLevel"
+        >
+          <option *ngFor="let level of skillLevels" [value]="level">{{ level }}</option>
+        </select>
+      </div>
+
+      <div class="col-2">
+        <a 
+          style="color: red;"
+          (click)="removeSelectedSkillInMemory(index)">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+              <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6Z"/>
+              <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1ZM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118ZM2.5 3h11V2h-11v1Z"/>
+            </svg>
+          </a>
+      </div>
+    </div>
+    <p>
+      I will add new skills: {{index}}
+
+      
+    </p>
+
+    
+   
+  </ng-template>
