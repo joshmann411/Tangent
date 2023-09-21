@@ -32,7 +32,6 @@ namespace TA_API.Utils
             List<int> uniqueNumbers = new List<int>();
             Random random = new Random();
 
-
             while (uniqueNumbers.Count < 4)
             {
                 int randomNumber = random.Next(1, 9);

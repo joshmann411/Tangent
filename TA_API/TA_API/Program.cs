@@ -4,6 +4,9 @@ using Serilog;
 using System.Net;
 using Newtonsoft.Json.Serialization;
 using TA_API.Utils;
+using System.Diagnostics;
+using TA_API.Interfaces;
+using TA_API.Repository;
 //using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -59,6 +62,9 @@ builder.Services.AddControllersWithViews().AddNewtonsoftJson(options =>
     .AddNewtonsoftJson(options => options.SerializerSettings.ContractResolver = new DefaultContractResolver()
 );
 
+builder.Services.AddScoped<IAddress, AddressRepository>();
+builder.Services.AddScoped<IEmployee, SqlEmployeeRepository>();
+builder.Services.AddScoped<ISkill, SqlSkillRepository>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

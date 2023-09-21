@@ -4,8 +4,7 @@ namespace TA_API.Models
 {
     public class Employee
     {
-        [Required]
-        public string Id { get; set; }
+        public string? Id { get; set; }
         
         [Required]
         public string FirstName { get; set; }
