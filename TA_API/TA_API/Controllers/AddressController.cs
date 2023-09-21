@@ -12,6 +12,7 @@ namespace TA_API.Controllers
 
         private readonly IAddress _address;
         private readonly ILogger<AddressController> _logger;
+
         public AddressController(
             IAddress address, 
             ILogger<AddressController> logger)

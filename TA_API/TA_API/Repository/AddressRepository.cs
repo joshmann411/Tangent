@@ -12,8 +12,12 @@ namespace TA_API.Repository
         private readonly ILogger<AddressRepository> _logger;
         private readonly AppDbContext _context;
 
+        public AddressRepository(
+           AppDbContext context)
+        {
+            _context = context;
+        }
 
-        //Task<String> UpdateAddress(Address addressChanges);
         public AddressRepository(
             ILogger<AddressRepository> logger,
             AppDbContext context)

@@ -13,13 +13,6 @@ namespace TA_API.Utils
         {
         }
 
-        //public AppDbContext(
-        //    DbContextOptions<AppDbContext> options,
-        //    DataSeeder seeder) : base(options)
-        //{
-        //    _seeder = seeder;
-        //}
-
         public DbSet<Employee> Employees { get; set; }
         public DbSet<Address> Addresses { get; set; }
         public DbSet<Skill> Skills { get; set; }
