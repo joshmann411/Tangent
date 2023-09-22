@@ -360,18 +360,30 @@
 
         <!-- 2. add more skills on click of Add New Skill button -->
         <div *ngFor="let newST of newSTIterator">
-          <ng-container [ngTemplateOutlet]="newSkillTemplate" [ngTemplateOutletContext]="{ index: newST }"></ng-container>
+          <ng-container [ngTemplateOutlet]="newSkillTemplate" [ngTemplateOutletContext]="{ currSkillModel: newST }"></ng-container>
         </div>
 
         
         
         <!-- Add New Skill button -->
-        <button 
-          mat-raised-button
-          color="primary" 
-          (click)="incrementNewSTIterator()">
+        <br>
+        <div>
+          <button 
+            mat-raised-button
+            color="primary" 
+            (click)="incrementNewSTIterator()">
           + Add New Skill
-        </button>
+          </button>
+
+          <button 
+            mat-raised-button
+            style="float: right;"
+            color="warn"
+            *ngIf="newSTIterator.length > 0" 
+            (click)="SaveToDatabase()">
+            + Save
+          </button>
+        </div>
       </div>
     </div>
 
@@ -388,49 +400,47 @@
 
 
   <ng-template #skillTemplate let-skill="skill">
-    <p>Incoming Skill: {{skill}}</p>
-  </ng-template>
-
-
-  <ng-template #newSkillTemplate let-index="index">
     <div class="row">
+      
       <div class="col-4">
-        <div class="mb-3">
-         
+          
           <!-- skill1 -->
           <input 
           type="text" 
-          class="form-control" 
+          class="form-control"
+          [(ngModel)]="skill.SkillName" 
           name="skill">
-        </div>
       </div>
-      <div class="col-2">
-        <div class="mb-3">
+
+      <div class="col-3">
          
           <!-- YrsExp1 -->
           <input 
           type="number" 
-          class="form-control" 
+          class="form-control"
+          [(ngModel)]="skill.YearsOfExperience" 
           name="YrsExp">
-        </div>
       </div>
 
       <div class="col-4">
-        <select
-          class="form-control"
-          id="selectedSkillLevel"
-          (change)="onSkillLevelChange($event)"
-          [(ngModel)]="selectedSkillLevel"
-          name="selectedSkillLevel"
-        >
-          <option *ngFor="let level of skillLevels" [value]="level">{{ level }}</option>
-        </select>
+        
+        <div>
+            <select
+              class="form-control form-select"
+              id="selectedSkillLevel"
+              (change)="onSkillLevelChange($event)"
+              [(ngModel)]="skill.SeniorityRating"
+              name="selectedSkillLevel">
+            <option class="dropdown-item" *ngFor="let level of skillLevels" [value]="level">{{ level }}</option>
+            
+          </select>
+        </div>
       </div>
 
-      <div class="col-2">
+      <div class="col-1">
         <a 
           style="color: red;"
-          (click)="removeSelectedSkillInMemory(index)">
+          (click)="removeSelectedSkillInDatabase(skill)">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
               <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6Z"/>
               <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1ZM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118ZM2.5 3h11V2h-11v1Z"/>
@@ -438,12 +448,60 @@
           </a>
       </div>
     </div>
-    <p>
-      I will add new skills: {{index}}
 
-      
-    </p>
+  </ng-template>
 
+
+  <ng-template #newSkillTemplate let-currSkillModel="currSkillModel">
     
-   
+    <div class="row">
+      <!-- {{currSkillModel.EmployeeId}} -->
+
+      <div class="col-4">
+          
+          <!-- skill1 -->
+          <input 
+          type="text" 
+          class="form-control"
+          [(ngModel)]="currSkillModel.SkillName" 
+          name="skill">
+      </div>
+
+      <div class="col-3">
+         
+          <!-- YrsExp1 -->
+          <input 
+          type="number" 
+          class="form-control"
+          [(ngModel)]="currSkillModel.YearsOfExperience" 
+          name="YrsExp">
+      </div>
+
+      <div class="col-4">
+        
+        <div>
+            <select
+              class="form-control form-select"
+              id="selectedSkillLevel"
+              (change)="onSkillLevelChange($event)"
+              [(ngModel)]="currSkillModel.SeniorityRating"
+              name="selectedSkillLevel">
+            <option class="dropdown-item" *ngFor="let level of skillLevels" [value]="level">{{ level }}</option>
+            
+          </select>
+        </div>
+      </div>
+
+      <div class="col-1">
+        <a 
+          style="color: red;"
+          (click)="removeSelectedSkillInMemory(currSkillModel)">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+              <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6Z"/>
+              <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1ZM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118ZM2.5 3h11V2h-11v1Z"/>
+            </svg>
+          </a>
+      </div>
+    </div>
+
   </ng-template>

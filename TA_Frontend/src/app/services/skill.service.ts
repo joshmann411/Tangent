@@ -16,10 +16,21 @@ export class SkillService {
 
     return this.http.get<any>(url);
   }
-  
-  // Task<JsonResult> GetAllSkills();
+
+  AddSkill(skill: any): Observable<any>{
+    let url = this.APIUrl + `/AddSkill`;
+
+    return this.http.post<any>(url, skill);
+  }
+
+  AddMultipleSkill(skillSet: any): Observable<any>{
+    let url = this.APIUrl + `/AddMultipleSkill`;
+
+    return this.http.post<any>(url, skillSet);
+  }
+
+
   // Task<JsonResult> GetSkill(int id);
-  // Task<string> AddSkill(Skill skill);
   // Task<string> UpdateSkill(Skill skillChanges);
   // Task<string> DeleteSkill(int Id);
 }

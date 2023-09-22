@@ -30,6 +30,16 @@ namespace TA_API.Repository
             return "Skill added successfully";
         }
 
+        public async Task<string> AddMultipleSkill(Skill[] skills)
+        {
+            foreach(Skill skill in skills)
+            {
+                var result = await AddSkill(skill);
+            }
+
+            return "Skills added successfully";
+        }
+
         public async Task<string> DeleteSkill(int Id)
         {
             if(Id > 0)

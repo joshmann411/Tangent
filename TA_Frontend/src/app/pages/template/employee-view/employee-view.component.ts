@@ -2,6 +2,7 @@ import { Component, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators  } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { AddressService } from 'src/app/services/address.service';
+import { SkillService } from 'src/app/services/skill.service';
 
 @Component({
   selector: 'app-employee-view',
@@ -30,11 +31,12 @@ export class EmployeeViewComponent {
 
 
   counter: number = 0;
-  newSTIterator: any[] = [];
-
-
+  
   skillLevels = Object.values(SkillLevel);
   selectedSkillLevel: SkillLevel = SkillLevel.Beginner;
+  newSTIterator: SkillModel[] = [];
+
+  // skillsArray: SkillModel[] = []
 
 
   constructor(
@@ -42,7 +44,8 @@ export class EmployeeViewComponent {
     public dialog: MatDialog,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private fb: FormBuilder,
-    private addressService: AddressService
+    private addressService: AddressService,
+    private skillService: SkillService
   ) {
     //
     this.selEmp = data?.content?.emp;
@@ -114,28 +117,74 @@ export class EmployeeViewComponent {
   }
 
  incrementNewSTIterator(){
+  //each push should be of an object 
+  //index
+  //Skill
+  //YrsExp
+  //SkillLevel.Beginner
   this.counter = this.counter + 1;
-  console.log(`INC: ${this.counter}`)
-  this.newSTIterator.push(this.counter)
+
+  let newSkillModel: SkillModel = new SkillModel(
+    this.selEmp.Id,
+    "",
+    1,
+    SkillLevel.Beginner);
+
+    console.log(`Pushing new skill model: ${JSON.stringify(newSkillModel)}`);
+
+    this.newSTIterator.push(newSkillModel)
  }
 
- removeSelectedSkillInMemory(indx: any)
+ removeSelectedSkillInMemory(oneSkillModel: SkillModel)
  {
-  console.log(`Indx to remove: ${indx}`)
-  this.newSTIterator = this.newSTIterator.filter(r => r !== indx);
+  console.log(`Skill model to remove: ${JSON.stringify(oneSkillModel)}`);
+  this.newSTIterator = this.newSTIterator.filter(r => r !== oneSkillModel);
  }
 
- // Event handler to capture the selected value
-//  onSkillLevelSelected(event: any) {
-//   this.selectedSkillLevel = event.target.value;
-//   console.log('Selected Skill Level:', this.selectedSkillLevel);
-// }
-onSkillLevelChange(event: any) {
-  this.selectedSkillLevel = event.target.value;
-  console.log('Selected Skill Level:', this.selectedSkillLevel);
-}
+ removeSelectedSkillInDatabase(oneSkillModel: any){
+  alert("Pending implementation");
+  console.log("Pending implementation");
+ }
+
+
+  SaveToDatabase()
+  {
+    //validate each array data (None specified in the requirement)
+
+    // send it to DB for the employe in question
+    this.skillService.AddMultipleSkill(this.newSTIterator).subscribe((response: any) => {
+      console.log(`Response: ${response}`);
+
+      //reset the skills to the newly added ones
+      this.GetSkillsOfAnEmployee(this.selEmp?.Id)
+    })
+  }
+
+  GetSkillsOfAnEmployee(empId: string)
+  {
+    this.skillService.GetSkillsOfEmployee(empId).subscribe((data: any) => {
+      console.log(`Skills of employee: ${empId} = ${JSON.stringify(data)}`);
+      
+      this.empSkills = data;
+    })
+  }
+
+
+  onSkillLevelChange(event: any) {
+    this.selectedSkillLevel = event.target.value;
+    console.log('Selected Skill Level:', this.selectedSkillLevel);
+  }
 }
 
+
+export class SkillModel{
+  constructor( 
+      public EmployeeId: number,  
+      public SkillName: string,
+      public YearsOfExperience: number,
+      public SeniorityRating: SkillLevel = SkillLevel.Beginner
+  ){}  
+}
 
 
 export enum SkillLevel {
