@@ -17,12 +17,10 @@ export class EmployeeFilterPipe implements PipeTransform {
       return (
         employee.FirstName?.toLowerCase().includes(searchTerm) ||
         employee.LastName?.toLowerCase().includes(searchTerm) ||
-        employee.ContactNumber?.toLowerCase().includes(searchTerm) ||
-        employee.Email?.toLowerCase().includes(searchTerm) ||
-        employee.DateOfBirth?.toLowerCase().includes(searchTerm) 
+        employee.Email?.toLowerCase().includes(searchTerm)
       );
     });
-    
+
     return filteredEmployees.length > 0 ? filteredEmployees : []; 
   }
 

@@ -37,16 +37,25 @@ class="navbar navbar-expand-lg navbar-dark bg-dark">
               
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                     <li>
-                        <a class="dropdown-item" href="#">Not defined 1</a>
+                        Year:
+                        <input
+                            style="margin: 0px 5px 5px 5px;"
+                            type="number"
+                            id="birthYear"
+                            name="birthYear"
+                            [(ngModel)]="selectedYear"
+                            (input)="selectYear($event)"
+                            placeholder="YYYY"
+                            />
                     </li>
                   
-                    <li>
+                    <!-- <li>
                         <a class="dropdown-item" href="#">Not defined 2</a>
                     </li>
                     
                     <li>
                         <a class="dropdown-item" href="#">Not defined 3</a>
-                    </li>
+                    </li> -->
                 </ul>
               </span>
         </form>
@@ -68,10 +77,10 @@ class="navbar navbar-expand-lg navbar-dark bg-dark">
 
 <!-- show all employees -->
 <ng-container
-*ngIf="(allEmployees | employeeFilter: searchTerm).length > 0">
+*ngIf="(allEmployees | employeeFilter: searchTerm | birthYearFilter: selectedYear).length > 0">
     <div 
     style="margin: 20px 30px 0px 30px;" 
-    *ngFor="let x of allEmployees | employeeFilter: searchTerm; let i = index">
+    *ngFor="let x of allEmployees | employeeFilter: searchTerm | birthYearFilter: selectedYear; let i = index">
         
         <div 
             class="card" 
@@ -101,7 +110,7 @@ class="navbar navbar-expand-lg navbar-dark bg-dark">
 
 
 <ng-container
-*ngIf="(allEmployees | employeeFilter: searchTerm).length < 1">
+*ngIf="(allEmployees | employeeFilter: searchTerm | birthYearFilter: selectedYear).length < 1">
     <div 
     style="margin-top: 25px; font-weight: bold;"
     class="text-center">

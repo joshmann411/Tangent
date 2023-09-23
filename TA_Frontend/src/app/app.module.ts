@@ -16,6 +16,7 @@ import { MatButtonModule } from '@angular/material/button'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EmployeeAddComponent } from './pages/template/employee-add/employee-add.component';
 import { EmployeeFilterPipe } from './Util/employee-filter.pipe';
+import { BirthYearFilterPipe } from './Util/birth-year-filter.pipe';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { EmployeeFilterPipe } from './Util/employee-filter.pipe';
     EmployeeEditComponent,
     EmployeeAddComponent,
     EmployeeFilterPipe,
+    BirthYearFilterPipe,
 
     
   ],

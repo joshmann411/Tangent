@@ -14,6 +14,8 @@ import { EmployeeAddComponent } from '../template/employee-add/employee-add.comp
 export class EmployeeComponent {
   allEmployees: any;
   searchTerm: string = '';
+  selectedYear: number = 0;
+
   constructor(
     public dialog: MatDialog,
     private employeeService: EmployeeService,
@@ -90,5 +92,12 @@ export class EmployeeComponent {
     });
 
     
+  }
+
+  // Implement the logic for selected year
+  selectYear(event: Event) {
+    console.log(`change: ${(event.target as HTMLInputElement).value}`);
+    
+    this.selectedYear = parseInt((event.target as HTMLInputElement).value);
   }
 }
