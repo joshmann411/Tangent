@@ -342,7 +342,7 @@
             YrsExp
           </div>
           <div class="col-4">
-            Seniority Rating
+            Rating
           </div>
         </div>
         <!-- header ends -->
@@ -355,12 +355,14 @@
         
           <div *ngFor="let _skill of empSkills">
             <ng-container [ngTemplateOutlet]="skillTemplate" [ngTemplateOutletContext]="{ skill: _skill }"></ng-container>
+            <br>
           </div>
         </div>
 
         <!-- 2. add more skills on click of Add New Skill button -->
         <div *ngFor="let newST of newSTIterator">
           <ng-container [ngTemplateOutlet]="newSkillTemplate" [ngTemplateOutletContext]="{ currSkillModel: newST }"></ng-container>
+          <br>
         </div>
 
         
@@ -429,11 +431,19 @@
               class="form-control form-select"
               id="selectedSkillLevel"
               (change)="onSkillLevelChange($event)"
-              [(ngModel)]="skill.SeniorityRating"
               name="selectedSkillLevel">
-            <option class="dropdown-item" *ngFor="let level of skillLevels" [value]="level">{{ level }}</option>
+              <!-- [(ngModel)]="skill.SeniorityRating" -->
+              <!-- [value]="skill.SeniorityRating" -->
+              
+              <option 
+                class="dropdown-item" 
+                *ngFor="let level of skillLevels" 
+                [selected]="level == getSkillLevelFromNumericValue(skill.SeniorityRating)"
+                [value]="level">
+                {{ level }}
+              </option>
             
-          </select>
+            </select>
         </div>
       </div>
 

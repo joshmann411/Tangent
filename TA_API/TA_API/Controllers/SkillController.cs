@@ -96,7 +96,7 @@ namespace TA_API.Controllers
 
         [HttpPost]
         [Route("AddSkill")]
-        public async Task<string> AddSkill([FromBody] Skill skill)
+        public async Task<IActionResult> AddSkill([FromBody] Skill skill)
         {
             try
             {
@@ -104,19 +104,19 @@ namespace TA_API.Controllers
 
                 var result = await _skills.AddSkill(skill);
 
-                return result;
+                return new JsonResult(result);
             }
             catch (Exception ex)
             {
                 _logger.LogError($"CL: Error occurred while adding new skill. Exception: {ex.Message}");
 
-                return "Error occurred";
+                return new JsonResult("Error occurred");
             }
         }
 
         [HttpPost]
         [Route("AddMultipleSkill")]
-        public async Task<string> AddMultipleSkill(Skill[] skills)
+        public async Task<IActionResult> AddMultipleSkill(Skill[] skills)
         {
             try
             {
@@ -124,13 +124,13 @@ namespace TA_API.Controllers
 
                 var result = await _skills.AddMultipleSkill(skills);
 
-                return result;
+                return new JsonResult(result);
             }
             catch (Exception ex)
             {
                 _logger.LogError($"CL: Error occurred while adding multiple skills. Exception: {ex.Message}");
 
-                return "Error occurred";
+                return new JsonResult("Error occurred");
             }
         }
 

@@ -174,6 +174,19 @@ export class EmployeeViewComponent {
     this.selectedSkillLevel = event.target.value;
     console.log('Selected Skill Level:', this.selectedSkillLevel);
   }
+
+  getSkillLevelFromNumericValue(value: number): string {
+    switch (value) {
+      case 0:
+        return SkillLevel.Beginner;
+      case 1:
+        return SkillLevel.Intermediate;
+      case 2:
+        return SkillLevel.Expert;
+      default:
+        return "NA"; // Handle invalid values gracefully
+    }
+  }
 }
 
 
