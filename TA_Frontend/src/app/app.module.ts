@@ -15,6 +15,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EmployeeAddComponent } from './pages/template/employee-add/employee-add.component';
+import { EmployeeFilterPipe } from './Util/employee-filter.pipe';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { EmployeeAddComponent } from './pages/template/employee-add/employee-add
     EmployeeViewComponent,
     EmployeeEditComponent,
     EmployeeAddComponent,
+    EmployeeFilterPipe,
 
     
   ],

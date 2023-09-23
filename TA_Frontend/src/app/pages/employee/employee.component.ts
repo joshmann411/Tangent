@@ -13,7 +13,7 @@ import { EmployeeAddComponent } from '../template/employee-add/employee-add.comp
 })
 export class EmployeeComponent {
   allEmployees: any;
-
+  searchTerm: string = '';
   constructor(
     public dialog: MatDialog,
     private employeeService: EmployeeService,
