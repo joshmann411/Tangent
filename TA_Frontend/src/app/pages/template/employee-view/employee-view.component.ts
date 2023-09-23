@@ -142,8 +142,19 @@ export class EmployeeViewComponent {
  }
 
  removeSelectedSkillInDatabase(oneSkillModel: any){
-  alert("Pending implementation");
-  console.log("Pending implementation");
+  // alert("Pending implementation");
+  console.log(`Skill to remove in DB: ${JSON.stringify(oneSkillModel)}`);
+
+  this.skillService.DeleteSkill(oneSkillModel?.Id).subscribe((response: any) => {
+    console.log(`Delete response: ${JSON.stringify(response)}`);
+
+     //  get updated skills list
+     this.skillService.GetSkillsOfEmployee(this.selEmp.Id).subscribe((result: any) => {
+      console.log(`Updated address: ${JSON.stringify(result)}`);
+
+        this.empSkills = result;
+     });
+  })
  }
 
 
@@ -155,6 +166,8 @@ export class EmployeeViewComponent {
     this.skillService.AddMultipleSkill(this.newSTIterator).subscribe((response: any) => {
       console.log(`Response: ${response}`);
 
+      //clear in memory list
+      this.newSTIterator = [];
       //reset the skills to the newly added ones
       this.GetSkillsOfAnEmployee(this.selEmp?.Id)
     })

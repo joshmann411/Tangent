@@ -162,7 +162,7 @@ namespace TA_API.Controllers
 
         [HttpDelete]
         [Route("DeleteSkill/{skillId}")]
-        public async Task<string> DeleteSkill(int skillId)
+        public async Task<IActionResult> DeleteSkill(int skillId)
         {
             try
             {
@@ -172,13 +172,13 @@ namespace TA_API.Controllers
 
                 _logger.LogInformation("Deleted Successfully !");
 
-                return response;
+                return new JsonResult(response);
             }
             catch (Exception ex)
             {
                 _logger.LogError($"Error while trying to delete skill of ID: {skillId}. Exception: {ex.Message.ToString()}");
 
-                return $"Error while deleting skill of ID: {skillId}";
+                return new JsonResult($"Error while deleting skill of ID: {skillId}");
             }
         }
 

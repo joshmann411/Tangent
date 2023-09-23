@@ -29,8 +29,12 @@ export class SkillService {
     return this.http.post<any>(url, skillSet);
   }
 
+  DeleteSkill(skillId: number): Observable<any>{
+    let url = this.APIUrl + `/DeleteSkill/${skillId}`;
+
+    return this.http.delete<any>(url);
+  }
 
   // Task<JsonResult> GetSkill(int id);
   // Task<string> UpdateSkill(Skill skillChanges);
-  // Task<string> DeleteSkill(int Id);
 }
