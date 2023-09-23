@@ -16,9 +16,15 @@ export class EmployeeService {
 
     return this.http.get<any>(url);
   }
+
+  AddEmployee(emp: any): Observable<any>{
+    let url = this.APIUrl + '/AddEmployee';
+
+    return this.http.post<any>(url, emp);
+  } 
+
   // Task<JsonResult> GetAllEmployees();
   // Task<JsonResult> GetEmployeeById(string id);
-  // Task<string> AddEmployee(Employee employee);
   // Task<string> UpdateEmployee(Employee employeeChanges);
   // Task<string> DeleteEmployeeWithId(string Id);
 }

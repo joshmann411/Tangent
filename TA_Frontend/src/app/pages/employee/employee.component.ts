@@ -4,6 +4,7 @@ import { EmployeeViewComponent } from '../template/employee-view/employee-view.c
 import { MatDialog } from '@angular/material/dialog';
 import { AddressService } from 'src/app/services/address.service';
 import { SkillService } from 'src/app/services/skill.service';
+import { EmployeeAddComponent } from '../template/employee-add/employee-add.component';
 
 @Component({
   selector: 'app-employee',
@@ -31,6 +32,25 @@ export class EmployeeComponent {
     })
   }
 
+  openAddNewEmployeeDialog(){
+    const dialogRef = this.dialog.open(EmployeeAddComponent, {
+      width: '400px',
+      data: {
+        title: 'Add Employee'
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('Dialog closed with result:', result);
+
+      if (result === 'reload') {
+        // Wait for 2 seconds and then reload the page
+        setTimeout(() => {
+          window.location.reload();
+        }, 2000);
+      }
+    });
+  }
 
   openDialog(selEmp: any) {
     let ampAddr: any[] | null = null;

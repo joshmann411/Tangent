@@ -14,6 +14,7 @@ import { EmployeeEditComponent } from './pages/template/employee-edit/employee-e
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { EmployeeAddComponent } from './pages/template/employee-add/employee-add.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     ViewSkillComponent,
     EmployeeViewComponent,
     EmployeeEditComponent,
+    EmployeeAddComponent,
 
     
   ],

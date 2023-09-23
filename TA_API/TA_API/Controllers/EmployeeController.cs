@@ -75,7 +75,7 @@ namespace TA_API.Controllers
 
         [HttpPost]
         [Route("AddEmployee")]
-        public async Task<string> AddEmployee([FromBody] Employee employee)
+        public async Task<IActionResult> AddEmployee([FromBody] Employee employee)
         {
             try
             {
@@ -83,13 +83,13 @@ namespace TA_API.Controllers
 
                 var result = await _employees.AddEmployee(employee);
 
-                return result;
+                return new JsonResult(result);
             }
             catch (Exception ex)
             {
                 _logger.LogError($"CL: Error occurred while adding new employee. Exception: {ex.Message}");
 
-                return "Error occurred while adding new employee";
+                return new JsonResult("Error occurred while adding new employee");
             }
         }
 
